@@ -25,6 +25,10 @@ h1 {
     text-align: center;
 }
 
+#listHeading {
+    font-size: 48px;
+}
+
 a {
     text-decoration: none;
 }
@@ -49,5 +53,17 @@ a {
     display: flex;
     justify-content: center;
     column-gap: 177px;
+}
+
+#year {
+    font-size: 36px;
+}
+
+#webpageList {
+    font-size: 24px;
+}
+
+#webPageContainer {
+    padding-left: 10%;
 }
 
