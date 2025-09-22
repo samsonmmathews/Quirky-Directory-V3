@@ -11,21 +11,21 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getDatabase, ref, onValue, update, push, child } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
-// const firebaseConfig = {
-//     apiKey: "",
-//     authDomain: "",
-//     databaseURL: "",
-//     projectId: "",
-//     storageBucket: "",
-//     messagingSenderId: "",
-//     appId: ""
-// };
+const firebaseConfig = {
+  apiKey: "AIzaSyDClQ0KhhVzRmneZw45j0F35n-7L354BrA",
+  authDomain: "brickmmo-f41ae.firebaseapp.com",
+  databaseURL: "https://brickmmo-f41ae-default-rtdb.firebaseio.com",
+  projectId: "brickmmo-f41ae",
+  storageBucket: "brickmmo-f41ae.firebasestorage.app",
+  messagingSenderId: "511312519816",
+  appId: "1:511312519816:web:b11956d0248e0b5f04f53d"
+};
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
@@ -46,17 +46,12 @@ function addData(name, url, author, github) {
         author: author.value,
         github_link: github.value
     }
-
-    // Get a key for a new directory
-    const newPostKey = push(child(ref(database), 'sites')).key;
-
-    const updates = {};
-
-    // Add directory object into updates object.
-    updates['/sites' + newPostKey] = directory;
-
-    // Update database with updates
-    return update(ref(database), updates);
+    // Get site directory
+    const postListRef = ref(database, 'sites');
+    // Get id key of new directory
+    const newPostRef = push(postListRef);
+    // Update database with new directory
+    set(newPostRef, directory);
 };
 
 // Create Element
@@ -68,7 +63,7 @@ function createElement(db) {
 
 // retrieves data from firebase
 function showData() {
-    const reference = ref(database, '/');
+    const reference = ref(database, '/sites');
     onValue(reference, function(snapshot) {
         snapshot.forEach(childSnapshot => {
             createElement(childSnapshot.val())
