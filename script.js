@@ -86,4 +86,3 @@ form.onsubmit = function() {
 
     return false;
 }
-    
