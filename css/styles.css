@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech&display=swap');
+
 #form {
     margin: 1.25em auto;
     padding: 1.25em;
@@ -12,3 +14,56 @@ label {
     margin: bottom;
     color: #333;
 }
+
+body {
+    font-family: "Share Tech";
+    padding-top: 10%;
+}
+
+h1 {
+    font-size: 128px;
+    text-align: center;
+}
+
+#listHeading {
+    font-size: 48px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    width: 312px;
+    height: 121px;
+    font-size: 32px;
+    background-color: #082032;
+    color: #FFFFFF;
+}
+
+.button:hover {
+    background-color: #224D6E;
+}
+
+.link-container {
+    display: flex;
+    justify-content: center;
+    column-gap: 177px;
+}
+
+#year {
+    font-size: 36px;
+}
+
+#webpageList {
+    font-size: 24px;
+}
+
+#webPageContainer {
+    padding-left: 5%;
+}
+
