@@ -3,7 +3,7 @@
     1. Connect to firebase. (api keys) X
     2. CRUD
         - Create X
-        - Read
+        - Read 
         - Update
         - Delete
     3. Display data.
@@ -11,7 +11,7 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getDatabase, ref, onValue, push, set } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+import { getDatabase, ref, onValue, push, set, get, child } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
 
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
@@ -71,8 +71,30 @@ function showData() {
     })
 }
 
+
+const showRandomDirectory = () => {
+    const reference = ref(database, '/sites');
+    onValue(reference, function(snapshot) {
+        // Select link tag for random directory
+        const linkId = document.getElementById('randomDirectory');
+        // Select snapshot object keys
+        const directoryList = Object.keys(snapshot.val());
+        // Select random directory
+        const randomDirectory = Math.floor(Math.random() * directoryList.length);
+
+        get(child(reference, `${directoryList[randomDirectory]}`)).then((snapshot) => {
+        linkId.href = snapshot.val().url;
+        })
+        .catch((error) => {
+        console.error(error);
+        });
+       
+    })
+}
+
 // Show users on screen
-window.onload = showData;
+window.onload = showRandomDirectory;
+
 
 // Store form data into firebase database
 form.onsubmit = function() {
@@ -81,7 +103,7 @@ form.onsubmit = function() {
     const siteUrl = document.getElementById('siteUrl');
     const siteAuthor = document.getElementById('siteAuthor');
     const githubUrl = document.getElementById('githubUrl');
-
+    
     addData(siteName, siteUrl, siteAuthor, githubUrl);
 
     return false;
