@@ -92,19 +92,44 @@ const showRandomDirectory = () => {
     })
 }
 
-// Show users on screen
-window.onload = showRandomDirectory;
+if(document.getElementById('randomDirectory')) {
+    // Show users on screen
+    window.onload = showRandomDirectory;
+}
 
+if(document.getElementById('form')) {
+    // Store form data into firebase database
+    form.onsubmit = function() {
+        
+        const siteName = document.getElementById('siteName');
+        const siteUrl = document.getElementById('siteUrl');
+        const siteAuthor = document.getElementById('siteAuthor');
+        const githubUrl = document.getElementById('githubUrl');
+        
+        addData(siteName, siteUrl, siteAuthor, githubUrl);
 
-// Store form data into firebase database
-form.onsubmit = function() {
-    
-    const siteName = document.getElementById('siteName');
-    const siteUrl = document.getElementById('siteUrl');
-    const siteAuthor = document.getElementById('siteAuthor');
-    const githubUrl = document.getElementById('githubUrl');
-    
-    addData(siteName, siteUrl, siteAuthor, githubUrl);
+        return false;
+    }
+}
 
-    return false;
+if(document.getElementById('webpageList')) {
+    const webpageList = document.getElementById('webpageList');
+
+    const reference = ref(database, '/sites');
+    onValue(reference, (snapshot) => {
+        webpageList.innerHTML = "";
+        snapshot.forEach((childSnapshot) => {
+            const webpage = childSnapshot.val();
+            const li = document.createElement('li');
+            li.innerHTML = `<div class="directory-list">
+            <h3>${webpage.name}</h3>
+            <p>${webpage.author}</p>
+            <p>
+                <a href="${webpage.url}">Visit Website</a>
+                <a href="${webpage.github_link}">GitHub repo</a>
+            </p>
+            </div>`;
+            webpageList.appendChild(li);
+        });
+    });
 }
